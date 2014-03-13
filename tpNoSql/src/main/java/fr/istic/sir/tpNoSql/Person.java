@@ -1,5 +1,7 @@
 package fr.istic.sir.tpNoSql;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 
 import com.google.code.morphia.annotations.Entity;
@@ -12,7 +14,7 @@ public class Person {
 	@Id ObjectId id;
 	String name;
 	
-	Address address;
+	List<Address> listaddress;
 	
 	public String getName() {
 		return name;
@@ -20,11 +22,14 @@ public class Person {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
 
+	
+	public List<Address> getListaddress() {
+		return listaddress;
+	}
+	public void setListaddress(List<Address> listaddress) {
+		this.listaddress = listaddress;
+	}
+	
+	
 }

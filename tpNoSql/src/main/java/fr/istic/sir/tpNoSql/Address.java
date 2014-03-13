@@ -10,12 +10,17 @@ public class Address {
 	
 	@Id ObjectId id;
 	
+
+
 	String street;
 	String city;
 	String postCode;
 	String country;
 	
 	
+	public ObjectId getId() {
+		return id;
+	}
 	
 	public String getStreet() {
 		return street;

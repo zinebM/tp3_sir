@@ -1,5 +1,7 @@
 package fr.istic.sir.tpNoSql;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 
 import com.google.code.morphia.annotations.Entity;
@@ -12,6 +14,7 @@ public class Article {
 	@Id ObjectId id;
 	String name;
 	int stars;
+	List<Person> listePersonnes;
 	
 	
 	
@@ -27,4 +30,13 @@ public class Article {
 	public void setStars(int stars) {
 		this.stars = stars;
 	}
+	public List<Person> getListePersonnes() {
+		return listePersonnes;
+	}
+	public void setListePersonnes(List<Person> listePersonnes) {
+		this.listePersonnes = listePersonnes;
+	}
+	
+	
+	
 }
