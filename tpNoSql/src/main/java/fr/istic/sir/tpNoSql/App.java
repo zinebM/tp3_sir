@@ -16,94 +16,116 @@ import com.mongodb.Mongo;
  */
 public class App 
 {
-    public static void main( String[] args ) 
-    {
-    	Morphia morphia = new Morphia();   
+	public static void main( String[] args ) 
+	{
+		Morphia morphia = new Morphia();   
 
-      //  Mongo mongo = new Mongo();
+		//  Mongo mongo = new Mongo();
 
-        morphia.map(Person.class).map(Address.class);
+		morphia.map(Person.class).map(Address.class);
 
-        Datastore ds;
+		Datastore ds;
 		try {
 			ds = morphia.createDatastore( new Mongo(), "my_database");
 			
-			 
-			 
-			 Person personZineb = ds.find(Person.class).field("name").equal("Zineb M").get();
-			 
-//			 for(Address a:personZineb.getListaddress()){
-//				 System.err.println(a.getCity());
-//				 System.err.println(a.getStreet());
-//			 }
-			 
-			 Article art = new Article();
-			 art.setName("Apprendre NoSQL");
-			 
-			 List<Person> listpersonnes=new ArrayList<Person>();
-			 listpersonnes.add(personZineb);
-			 
-			 art.setListePersonnes(listpersonnes);
-			 
-			 ds.save(listpersonnes);
-			 ds.save(art);
-			 
-			 for(Article ar : ds.find(Article.class)){ 
-				 	System.err.println(ar.getName());
-				 	for(Person pers : ar.getListePersonnes()){ 
-				 		System.err.println(pers.getName());
-//				 		for(Address a:pers.getListaddress()){
-//							 System.err.println(a.getCity());
-//							 System.err.println(a.getStreet());
-//						 }
-				 		
-				 	}
-			 }
-			 
-//			 Person p = new Person();
-//			 p.setName("Zineb M");
-//
-//			 Address address1 = new Address();
-//			 address1.setStreet("Some street - 1");
-//			 address1.setCity("Some city - 1");
-//			 address1.setPostCode("123 456 - 1");
-//			 address1.setCountry("Some country - 1");
-//			  
-//			 Address address2 = new Address();
-//			 address2.setStreet("Some street - 2");
-//			 address2.setCity("Some city - 2");
-//			 address2.setPostCode("123 456 - 2");
-//			 address2.setCountry("Some country - 2");
-//			 
-//			 
-//			 List<Address> listadresses=new ArrayList<Address>();
-//			 listadresses.add(address1);
-//			 listadresses.add(address2);
-//			 
-//			 p.setListaddress(listadresses);
-////			 
-////			 //sauvegarde
-//			 ds.save(listadresses);
-//			 ds.save(p);
+			//creation des articles
+			Article art = new Article();
+			art.setName("Apprendre NoSQL");
 
-//			 for (Person e : ds.find(Person.class)) {
-////				 System.err.println(e.getAddress().getCity());
-//		 		System.err.println(e.getName());
-//				 
-//				 for(Address a:p.getListaddress()){
-//					 System.err.println(a.getCity());
-//					 System.err.println(a.getStreet());
-//				 }
-//				
-//			 }
-//			 
+			Article art2 = new Article();
+			art2.setName("Apprendre JPA");
+
+			
+			//creation des personnes
+			Person p = new Person();
+			p.setName("Fidy R");
+
+			Person p2 = new Person();
+			p2.setName("Zineb M");
+
+			//creation des adresses
+			Address address1 = new Address();
+			address1.setStreet("RUE - 11");
+			address1.setCity("Avenue- 11");
+			address1.setPostCode("456 - 11");
+			address1.setCountry("Madaga - 11");
+
+			Address address2 = new Address();
+			address2.setStreet("Some street - 12");
+			address2.setCity("Some city - 12");
+			address2.setPostCode("123 456 - 12");
+			address2.setCountry("Some country - 12");
+
+			Address address3 = new Address();
+			address3.setStreet("Some street - 21");
+			address3.setCity("Some city - 21");
+			address3.setPostCode("123 456 - 21");
+			address3.setCountry("Some country - 21");
+
+
+			//ajout adresses dans liste
+			List<Address> listadresses=new ArrayList<Address>();
+			listadresses.add(address1);
+			listadresses.add(address2);
+
+			List<Address> listadresses2=new ArrayList<Address>();
+			listadresses2.add(address3);
+
+
+			//rattacher les listes d'adresse aux personnes correspondantes
+			p.setListaddress(listadresses);
+			p2.setListaddress(listadresses2);
+
+			//ajout peronnes dans liste
+			List<Person> listpersonnes=new ArrayList<Person>();
+			listpersonnes.add(p);
+
+			List<Person> listpersonnes2=new ArrayList<Person>();
+			listpersonnes2.add(p2);
+
+			//rattacher les listes de personnes aux articles correspondants
+			art.setListePersonnes(listpersonnes);
+			art2.setListePersonnes(listpersonnes2);
+
+			//sauvegare dans la base
+			ds.save(address3);
+			ds.save(address2);
+			ds.save(address1);
+			ds.save(p);
+			ds.save(p2);
+			ds.save(listadresses2);
+			ds.save(listadresses);
+			ds.save(art2);
+			ds.save(art);
+			ds.save(listpersonnes);
+			ds.save(listpersonnes2);
+
+			//affichage
+			afficheByArticleName(ds,"Apprendre NoSQL");
+			afficheByArticleName(ds,"Apprendre JPA");
+
+
 		} catch (UnknownHostException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
+	}
+	
+	public static void afficheByArticleName(Datastore ds,String name){
+		Article article = ds.find(Article.class).field("name").equal(name).get();
 
-       
+		for(Person pers : article.getListePersonnes()){ 
 
-    }
+			System.err.println(" L'article: " +article.getName() + " a été acheté par:" );
+			System.err.println(pers.getName() + " qui a comme adresse(s) ");
+
+			for(Address a:pers.getListaddress()){
+				System.err.println(a.getCity());
+				System.err.println(a.getStreet());
+			}
+
+
+		}
+	}
 }
