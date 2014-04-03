@@ -5,6 +5,7 @@ Pour ce Tp 3, nous avons crée deux repos differents,celui là pour NoSQL et un 
 
 Dans cette première partie le but était dz créer un projet Maven, puis utiliser la librairie Morphia afin de se connecter à la base de données MongoDB
 
+1)
 En suivant le modèle de données donné, nous avons crée plusieurs objets, afin de les stocker dans la base de données.
  Voici un exemple de code:
  
@@ -39,5 +40,5 @@ this.listaddress = listaddress;
 }
 ```
 
-2
+2)
 Les limites d'une base de données orientée objet est qu'elle ne  permet pas la même flexibilité dans les requêtes et les chargements de données que les bases de données relationnelles.
